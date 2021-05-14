@@ -1,20 +1,20 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@model EmployeeManagement.ViewModels.HomeDetailsViewModel
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
 </head>
 <body>
-    <h3>@ViewData["PageTitle"]</h3>
-    @{
-        var employee = ViewData["Employee"] as EmployeeManagement.Models.Employee;
-    }
+    <h3>@Model.PageTitle</h3>
+
     <div>
-        Name: @employee.Name
+        Name: @Model.Employee.Name
     </div>
     <div>
-        Name: @employee.Email
+        Name: @Model.Employee.Email
     </div>
     <div>
-        Name: @employee.Department
+        Name: @Model.Employee.Department
     </div>
 </body>
 </html>
