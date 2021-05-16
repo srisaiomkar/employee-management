@@ -32,6 +32,10 @@ namespace EmployeeManagement
             app.UseRouting();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("default", "{controller=home}/{action=index}/{id?}");
+            //});
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
