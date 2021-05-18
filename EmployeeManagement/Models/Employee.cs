@@ -16,6 +16,7 @@ namespace EmployeeManagement.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        public Department Department { get; set; }
+        [Required]
+        public Department? Department { get; set; }
     }
 }
