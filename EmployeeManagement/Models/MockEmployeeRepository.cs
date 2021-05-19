@@ -35,5 +35,15 @@ namespace EmployeeManagement.Models
         {
             return _employeeList;
         }
+
+        public int RemoveEmployee(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateEmployee(Employee employee)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
