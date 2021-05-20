@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.ViewModels
 {
-    public class HomeAddViewModel
+    public class EmployeeAddViewModel
     {
         [Required]
         [MaxLength(50)]

@@ -1,10 +1,13 @@
-﻿@model EmployeeAddViewModel
+﻿@model EmployeeEditViewModel
 
-@{ 
-    ViewBag.PageTitle = "Add Employee";
+@{
+    ViewBag.PageTitle = "Edit Employee";
+    var imagePath = "~/images/" + (Model.ImageName ?? "noimage.png");
 }
 
-<form enctype="multipart/form-data" asp-controller="home" asp-action="add" method="post" class="mt-3">
+<form enctype="multipart/form-data" asp-controller="home" asp-action="edit" method="post" class="mt-3">
+    <input hidden asp-for="Id" />
+    <input hidden asp-for="ImageName" />
     <div class="form-group row">
         <label asp-for="Name" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -37,14 +40,18 @@
         <div class="col-sm-10">
             <div class="custom-file">
                 <input asp-for="Image" class="form-control custom-file-input">
-                <label class="custom-file-label">Choose File...</label>
+                <label class="custom-file-label">Click here to change photo</label>
             </div>
         </div>
+    </div>
+    <div class="form-group row col-sm-4 offset-4">
+        <img class="imageThumbnail" src="@imagePath" asp-append-version="true" alt="Employee Image" />
     </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a class="btn btn-primary" asp-controller="home" asp-action="index">Cancel</a>
     </div>
 
     @section Scripts {

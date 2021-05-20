@@ -42,7 +42,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(HomeAddViewModel model)
+        public IActionResult Add(EmployeeAddViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +65,21 @@ namespace EmployeeManagement.Controllers
                 return RedirectToAction("details", new { id = newEmployeeId });
             }
             return View();
+        }
+
+        [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            Employee employee = _employeeRepository.GetEmployee(id);
+            EmployeeEditViewModel employeeEditViewModel = new EmployeeEditViewModel
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+                Department = employee.Department,
+                ImageName = employee.ImageName
+            };
+            return View(employeeEditViewModel);
         }
     }
 }
