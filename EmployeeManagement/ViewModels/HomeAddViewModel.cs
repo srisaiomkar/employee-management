@@ -1,23 +1,23 @@
 ﻿using EmployeeManagement.Models.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EmployeeManagement.Models
+namespace EmployeeManagement.ViewModels
 {
-    public class Employee
+    public class HomeAddViewModel
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required] 
+        [Required]
         public Department? Department { get; set; }
-        public string ImageName { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

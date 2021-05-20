@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/css/site.css" rel="stylesheet" />
     <environment include="Development">
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <script src="~/lib/jquery/jquery.js"></script>
@@ -59,6 +60,7 @@
         <div>
             @RenderBody()
         </div>
+        @RenderSection("Scripts", required: false);
     </div>
 </body>
 </html>
