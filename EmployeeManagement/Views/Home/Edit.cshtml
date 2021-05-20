@@ -2,12 +2,12 @@
 
 @{
     ViewBag.PageTitle = "Edit Employee";
-    var imagePath = "~/images/" + (Model.ImageName ?? "noimage.png");
+    var imagePath = "~/images/" + (Model.ExistingImageName ?? "noimage.png");
 }
 
 <form enctype="multipart/form-data" asp-controller="home" asp-action="edit" method="post" class="mt-3">
     <input hidden asp-for="Id" />
-    <input hidden asp-for="ImageName" />
+    <input hidden asp-for="ExistingImageName" />
     <div class="form-group row">
         <label asp-for="Name" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">

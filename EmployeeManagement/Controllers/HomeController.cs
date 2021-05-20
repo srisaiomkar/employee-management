@@ -15,7 +15,7 @@ namespace EmployeeManagement.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         public IWebHostEnvironment _webHostEnvironment { get; }
 
-        public HomeController(IEmployeeRepository employeeRepository,IWebHostEnvironment hostingEnvironment)
+        public HomeController(IEmployeeRepository employeeRepository, IWebHostEnvironment hostingEnvironment)
         {
             _employeeRepository = employeeRepository;
             _webHostEnvironment = hostingEnvironment;
@@ -46,14 +46,7 @@ namespace EmployeeManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-                if (model.Image != null)
-                {
-                    string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
-                    string filePath = Path.Combine(folderPath, uniqueFileName);
-                    model.Image.CopyTo(new FileStream(filePath, FileMode.Create));
-                }
+                string uniqueFileName = SaveImage(model);
                 Employee employee = new Employee
                 {
                     Name = model.Name,
@@ -77,9 +70,55 @@ namespace EmployeeManagement.Controllers
                 Name = employee.Name,
                 Email = employee.Email,
                 Department = employee.Department,
-                ImageName = employee.ImageName
+                ExistingImageName = employee.ImageName
             };
             return View(employeeEditViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EmployeeEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Image != null)
+                {
+                    string uniqueFileName = SaveImage(model);
+                    if (model.ExistingImageName != null)
+                    {
+                        string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "images", model.ExistingImageName);
+                        System.IO.File.Delete(filepath);
+                    }
+                    model.ExistingImageName = uniqueFileName;
+                }
+                Employee employee = new Employee
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Email = model.Email,
+                    Department = model.Department,
+                    ImageName = model.ExistingImageName
+                };
+                _employeeRepository.UpdateEmployee(employee);
+                return RedirectToAction("details", new { id = model.Id });
+            }
+            return View();
+        }
+
+        private string SaveImage(EmployeeAddViewModel model)
+        {
+            string uniqueFileName = null;
+            if (model.Image != null)
+            {
+                string folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
+                string filePath = Path.Combine(folderPath, uniqueFileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Image.CopyTo(stream);
+                }
+            }
+
+            return uniqueFileName;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace EmployeeManagement.ViewModels
     public class EmployeeEditViewModel : EmployeeAddViewModel
     {
         public int Id { get; set; }
-        public string ImageName { get; set; }
+        public string ExistingImageName { get; set; }
     }
 }
