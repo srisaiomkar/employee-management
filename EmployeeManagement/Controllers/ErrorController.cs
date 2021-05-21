@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.Controllers
 {
+    [Route("Error")]
     public class ErrorController : Controller
     {
-        [Route("Error/{statusCode}")]
-        public IActionResult Index(int statusCode)
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            return View("Error");
+        }
+
+        [Route("{statusCode}")]
+        public IActionResult HttpStatusCodehandler(int statusCode)
         {
             switch (statusCode)
             {
@@ -19,5 +27,6 @@ namespace EmployeeManagement.Controllers
             }
             return View();
         }
+        
     }
 }
