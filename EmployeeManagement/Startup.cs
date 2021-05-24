@@ -43,15 +43,16 @@ namespace EmployeeManagement
             else
             {
                 app.UseExceptionHandler("/Error");
-                //app.UseStatusCodePagesWithReExecute("Error/{0}");
-                app.UseStatusCodePagesWithRedirects("Error/{0}");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseEndpoints(endpoints =>
+            //app.UseAuthentication();
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

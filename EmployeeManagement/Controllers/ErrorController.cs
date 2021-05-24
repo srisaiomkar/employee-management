@@ -29,13 +29,15 @@ namespace EmployeeManagement.Controllers
         [Route("{statusCode}")]
         public IActionResult HttpStatusCodehandler(int statusCode)
         {
+            var statusCodeHandlerFeature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
             switch (statusCode)
             {
                 case 404:
+                    _logger.LogError($"Path : {statusCodeHandlerFeature.OriginalPath}");
                     ViewBag.ErrorMessage = "Sorry, the requested page could not be found.";
                     return View("NotFound");
             }
-            return View();
+            return View("Error");
         }
         
     }
