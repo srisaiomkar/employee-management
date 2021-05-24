@@ -47,7 +47,7 @@ namespace EmployeeManagement
             }
             app.UseStaticFiles();
             app.UseRouting();
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
