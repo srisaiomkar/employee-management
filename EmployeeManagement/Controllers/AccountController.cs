@@ -81,6 +81,15 @@ namespace EmployeeManagement.Controllers
             }
             return View();
         }
-
+        [AcceptVerbs("Post","Get")]
+        public async Task<IActionResult> CanEmailBeUsed(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user == null)
+            {
+                return Json(true);
+            }
+            return Json($"Email {email} is already taken");
+        }
     }
 }
