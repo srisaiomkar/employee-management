@@ -26,7 +26,7 @@
             {
                 foreach (string userName in Model.UserNames)
                 {
-                    <h5 class="card-title">userName</h5>
+                    <h5 class="card-title">@userName</h5>
                 }
             }
             else
@@ -35,8 +35,8 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-primary">Add User</a>
-            <a href="#" class="btn btn-danger">Remove Users</a>
+            <a asp-action="EditUsersInRole" asp-controller="administration"
+               asp-route-id ="@Model.Id" class="btn btn-primary">Add or Remove Users</a>
         </div>
     </div>
 </form>
