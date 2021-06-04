@@ -60,6 +60,12 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+            return View(users);
+        }
+        [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
 
