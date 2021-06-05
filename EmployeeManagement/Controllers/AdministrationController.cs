@@ -178,5 +178,61 @@ namespace EmployeeManagement.Controllers
             }
             return RedirectToAction("EditRole", new { id = role.Id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with {id} not found";
+                return View("NotFound");
+            }
+            else
+            {
+                var claims = await _userManager.GetClaimsAsync(user);
+                var roles = await _userManager.GetRolesAsync(user);
+                EditUserViewModel model = new EditUserViewModel
+                {
+                    Id = user.Id,
+                    Name=user.UserName,
+                    Email = user.Email,
+                    City = user.City,
+                    Claims = claims.Select(c => c.Value).ToList(),
+                    Roles = new List<string>(roles)
+                };
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+
+            var user = await _userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with {model.Id} not found";
+                return View("NotFound");
+            }
+            else
+            {
+                user.UserName = model.Name;
+                user.Email = model.Email;
+                user.City = model.City;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(model);
+            }
+        }
     }
 }
